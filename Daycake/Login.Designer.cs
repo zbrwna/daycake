@@ -180,6 +180,7 @@
             this.tlpButtonAcessar.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpButtonAcessar.Size = new System.Drawing.Size(193, 41);
             this.tlpButtonAcessar.TabIndex = 12;
+            this.tlpButtonAcessar.Paint += new System.Windows.Forms.PaintEventHandler(this.tlpButtonAcessar_Paint);
             // 
             // Login
             // 

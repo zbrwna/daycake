@@ -56,7 +56,7 @@
             this.tabConsultaProdutos = new System.Windows.Forms.TabPage();
             this.tblPanelBase = new System.Windows.Forms.TableLayoutPanel();
             this.btnExcluir = new System.Windows.Forms.Button();
-            this.lstListaClientes = new System.Windows.Forms.ListView();
+            this.lstListaProdutos = new System.Windows.Forms.ListView();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.txtBuscar = new System.Windows.Forms.TextBox();
@@ -158,6 +158,7 @@
             this.btnAdicionarProduto.Text = "Adicionar Produto";
             this.btnAdicionarProduto.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnAdicionarProduto.UseVisualStyleBackColor = false;
+            this.btnAdicionarProduto.Click += new System.EventHandler(this.btnAdicionarProduto_Click);
             // 
             // btnVoltar
             // 
@@ -415,7 +416,7 @@
             this.tblPanelBase.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblPanelBase.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tblPanelBase.Controls.Add(this.btnExcluir, 1, 3);
-            this.tblPanelBase.Controls.Add(this.lstListaClientes, 1, 2);
+            this.tblPanelBase.Controls.Add(this.lstListaProdutos, 1, 2);
             this.tblPanelBase.Controls.Add(this.tableLayoutPanel3, 1, 1);
             this.tblPanelBase.Location = new System.Drawing.Point(-23, 0);
             this.tblPanelBase.Name = "tblPanelBase";
@@ -437,24 +438,25 @@
             this.btnExcluir.TabIndex = 5;
             this.btnExcluir.Text = "Excluir";
             this.btnExcluir.UseVisualStyleBackColor = true;
+            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
             // 
-            // lstListaClientes
+            // lstListaProdutos
             // 
-            this.lstListaClientes.BackColor = System.Drawing.Color.White;
-            this.lstListaClientes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.lstListaClientes.HideSelection = false;
-            this.lstListaClientes.Location = new System.Drawing.Point(43, 83);
-            this.lstListaClientes.Name = "lstListaClientes";
-            this.lstListaClientes.Size = new System.Drawing.Size(753, 287);
-            this.lstListaClientes.TabIndex = 1;
-            this.lstListaClientes.UseCompatibleStateImageBehavior = false;
+            this.lstListaProdutos.BackColor = System.Drawing.Color.White;
+            this.lstListaProdutos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.lstListaProdutos.HideSelection = false;
+            this.lstListaProdutos.Location = new System.Drawing.Point(43, 83);
+            this.lstListaProdutos.Name = "lstListaProdutos";
+            this.lstListaProdutos.Size = new System.Drawing.Size(753, 287);
+            this.lstListaProdutos.TabIndex = 1;
+            this.lstListaProdutos.UseCompatibleStateImageBehavior = false;
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 95.51402F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.485981F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 116F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122F));
             this.tableLayoutPanel3.Controls.Add(this.btnBuscar, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.txtBuscar, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.lblBuscar, 0, 0);
@@ -476,6 +478,7 @@
             this.btnBuscar.TabIndex = 6;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // txtBuscar
             // 
@@ -483,7 +486,7 @@
             this.txtBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.txtBuscar.Location = new System.Drawing.Point(3, 22);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(602, 20);
+            this.txtBuscar.Size = new System.Drawing.Size(596, 20);
             this.txtBuscar.TabIndex = 5;
             // 
             // lblBuscar
@@ -564,7 +567,7 @@
         private System.Windows.Forms.TabPage tabConsultaProdutos;
         private System.Windows.Forms.TableLayoutPanel tblPanelBase;
         private System.Windows.Forms.Button btnExcluir;
-        private System.Windows.Forms.ListView lstListaClientes;
+        private System.Windows.Forms.ListView lstListaProdutos;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button btnBuscar;
         private System.Windows.Forms.TextBox txtBuscar;

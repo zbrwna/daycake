@@ -73,6 +73,11 @@ namespace Daycake
         {
 
         }
+
+        private void tlpButtonAcessar_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 
 }

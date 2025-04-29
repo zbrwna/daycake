@@ -12,29 +12,36 @@ using MySql.Data.MySqlClient;
 
 namespace Daycake
 {
-    public partial class Produtos : Form
+    public partial class FormPedido : Form
     {
         MySqlConnection Conexao;
         private string data_source = "datasource=localhost;username=root;password=1007;database=daycake";
-        public int? id_produto_selecionado = null;
+        public int? id_pedido_selecionado = null;
 
-        public Produtos()
+        public FormPedido()
         {
             InitializeComponent();
 
-            lstListaProdutos.View = View.Details;
-            lstListaProdutos.Columns.Clear();
-            lstListaProdutos.Items.Clear();
+            lstListaPedidos.View = View.Details;
+            lstListaPedidos.Columns.Clear();
+            lstListaPedidos.Items.Clear();
 
-            lstListaProdutos.Columns.Add("ID Produto", 50);
-            lstListaProdutos.Columns.Add("Nome do produto", 50);
-            lstListaProdutos.Columns.Add("Descrição", 100);
-            lstListaProdutos.Columns.Add("Preço", 100);
-            lstListaProdutos.Columns.Add("Tempo de Preparo", 100);
-            lstListaProdutos.Columns.Add("Status", 30);
+            lstListaPedidos.Columns.Add("ID Pedido", 50);
+            lstListaPedidos.Columns.Add("ID Cliente", 50);
+            lstListaPedidos.Columns.Add("Data do Pedido", 100);
+            lstListaPedidos.Columns.Add("Data da Entrega", 100);
+            lstListaPedidos.Columns.Add("Tipo do Produto", 100);
+            lstListaPedidos.Columns.Add("Valor", 30);
+            lstListaPedidos.Columns.Add("Observação", 80);
+            lstListaPedidos.Columns.Add("Forma de Pagamento", 50);
         }
 
-        private void btnAdicionarProduto_Click(object sender, EventArgs e)
+        private void tabConsultarPedidos_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnFazerPedido_Click(object sender, EventArgs e)
         {
             try
             {
@@ -46,25 +53,26 @@ namespace Daycake
 
                 // Habilitando o Update para o meu botão salvar
 
-                if (id_produto_selecionado == null)
+                if (id_pedido_selecionado == null)
                 {
                     // insert
                     cmd.Parameters.Clear(); // limpa os parâmetros antigos
                     cmd.CommandText =
-                        "INSERT INTO produto " +
-                        "(idProduto, nomeProduto, descricao, preco, tempo_preparo, status) " +
+                        "INSERT INTO pedido " +
+                        "(clienteid, data_pedido, data_entrega, tipoProduto, valor, observacao, forma_pagamento) " +
                         "VALUES " +
-                        "(@idProduto, @nomeProduto, @descricao, @preco, @tempo_preparo, @status)";
+                        "(@clienteid, @data_pedido, @data_entrega, @tipoProduto, @valor, @observacao, @forma_pagamento)";
 
-                    cmd.Parameters.AddWithValue("@idProduto", mtbIdProduto.Text);
-                    cmd.Parameters.AddWithValue("@nomeProduto", txtNomeProduto.Text);
-                    cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
-                    cmd.Parameters.AddWithValue("@preco", mtbPreco.Text);
-                    cmd.Parameters.AddWithValue("@tempo_preparo", mtbTempoPreparo.Text);
-                    cmd.Parameters.AddWithValue("@status", cbxAtivoInativo.Text);
+                    cmd.Parameters.AddWithValue("@clienteid", mtbIdCliente.Text);
+                    cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
+                    cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
+                    cmd.Parameters.AddWithValue("@tipoProduto", lvwTipoDoce.Text);
+                    cmd.Parameters.AddWithValue("@valor", txtValor.Text);
+                    cmd.Parameters.AddWithValue("@observacao", txtDescricao.Text);
+                    cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
 
                     cmd.ExecuteNonQuery();
-                    MessageBox.Show("Produto Inserido com Sucesso", "Sucesso",
+                    MessageBox.Show("Pedido Inserido com Sucesso", "Sucesso",
                                     MessageBoxButtons.OK,
                                     MessageBoxIcon.Information);
                 }
@@ -73,19 +81,21 @@ namespace Daycake
                     // update
                     cmd.Parameters.Clear(); // limpa os parâmetros antigos
                     cmd.CommandText =
-                        "UPDATE produto " +
-                        "SET idProduto = @idProduto, nomeProduto = @nomeProduto, descricao = @descricao, preco = @preco, tempo_preparo = @tempo_preparo, status = @status " +
-                        "WHERE idProduto = @idProduto";
+                        "UPDATE pedido " +
+                        "SET clienteid = @clienteid, data_pedido = @data_pedido, data_entrega = @data_entrega, tipoPrduto = @tipoProduto, valor = @valor, observacao = @observacao, forma_pagamento = @forma_pagamento " +
+                        "WHERE idPedido = @idPedido";
 
-                    cmd.Parameters.AddWithValue("@idProduto", mtbIdProduto.Text);
-                    cmd.Parameters.AddWithValue("@nomeProduto", txtNomeProduto.Text);
-                    cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
-                    cmd.Parameters.AddWithValue("@preco", mtbPreco.Text);
-                    cmd.Parameters.AddWithValue("@tempo_preparo", mtbTempoPreparo.Text);
-                    cmd.Parameters.AddWithValue("@status", cbxAtivoInativo.Text);
+                    cmd.Parameters.AddWithValue("@clienteid", mtbIdCliente.Text);
+                    cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
+                    cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
+                    cmd.Parameters.AddWithValue("@tipoProduto", lvwTipoDoce.Text);
+                    cmd.Parameters.AddWithValue("@valor", txtValor.Text);
+                    cmd.Parameters.AddWithValue("@observacao", txtDescricao.Text);
+                    cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
+                    cmd.Parameters.AddWithValue("@id", id_pedido_selecionado);
 
                     cmd.ExecuteNonQuery();
-                    MessageBox.Show("Produto Atualizado com Sucesso", "Sucesso",
+                    MessageBox.Show("Pedido Atualizado com Sucesso", "Sucesso",
                                     MessageBoxButtons.OK,
                                     MessageBoxIcon.Information);
                 }
@@ -108,13 +118,13 @@ namespace Daycake
             }
         }
 
-        private void btnBuscar_Click(object sender, EventArgs e)
+        private void btnBuscarPedidos_Click(object sender, EventArgs e)
         {
             try
             {
                 Conexao.Open();
 
-                string sql = "SELECT * FROM Produto";
+                string sql = "SELECT * FROM Pedido";
 
                 MySqlCommand cmd = new MySqlCommand(sql, Conexao);
                 MySqlDataReader reader = cmd.ExecuteReader();
@@ -123,15 +133,17 @@ namespace Daycake
                 {
                     string[] row =
                     {
-                        reader.GetInt32(0).ToString(), //id produto
-                        reader.GetString(1), // nome produto
-                        reader.GetString(2), // descrição
-                        reader.GetDecimal(3).ToString(), // preço
-                        reader.GetString(4), // tempo preparo
-                        reader.GetString(5), // status
+                        reader.GetInt32(0).ToString(), //id pedido
+                        reader.GetInt32(1).ToString(), // id cliente
+                        reader.GetString(2), // data pedido
+                        reader.GetString(3), // data entrega
+                        reader.GetString(4), // tipo produto
+                        reader.GetString(5), // valor
+                        reader.GetString(6), // observação
+                        reader.GetString(7), // forma pagamento
                        };
                     var linha_list_view = new ListViewItem(row);
-                    lstListaProdutos.Items.Add(linha_list_view);
+                    lstListaPedidos.Items.Add(linha_list_view);
                 }
 
             }
@@ -145,12 +157,12 @@ namespace Daycake
             }
         }
 
-        private void btnExcluir_Click(object sender, EventArgs e)
+        private void btnExcluirPedidos_Click(object sender, EventArgs e)
         {
-            excluir_produto();
+            excluir_pedido();
         }
 
-        private void carregar_produtos()
+        private void carregar_pedido()
         {
             try
             {
@@ -164,22 +176,24 @@ namespace Daycake
 
                 MySqlDataReader reader = buscar.ExecuteReader();
 
-                lstListaProdutos.Items.Clear();
+                lstListaPedidos.Items.Clear();
 
                 while (reader.Read())
                 {
                     string[] row =
                     {
-                        reader.GetInt32(0).ToString(), //id produto
-                        reader.GetString(1), // nome produto
-                        reader.GetString(2), // descrição
-                        reader.GetDecimal(3).ToString(), // preço
-                        reader.GetString(4), // tempo preparo
-                        reader.GetString(5), // status
+                        reader.GetInt32(0).ToString(), //id pedido
+                        reader.GetInt32(1).ToString(), // id cliente
+                        reader.GetString(2), // data pedido
+                        reader.GetString(3), // data entrega
+                        reader.GetString(4), // tipo produto
+                        reader.GetString(5), // valor
+                        reader.GetString(6), // observação
+                        reader.GetString(7), // forma pagamento
                     };
 
                     var linha_list_view = new ListViewItem(row);
-                    lstListaProdutos.Items.Add(linha_list_view);
+                    lstListaPedidos.Items.Add(linha_list_view);
                 }
 
 
@@ -196,16 +210,16 @@ namespace Daycake
 
         private void zerar_Forms()
         {
-            id_produto_selecionado = null;
-            txtNomeProduto.Text = String.Empty;
-            txtDescricao.Text = "";
-            mtbPreco.Text = null;
-            mtbTempoPreparo.Text = null;
-            cbxAtivoInativo.SelectedIndex = 0;
-            txtNomeProduto.Focus();
+            id_pedido_selecionado = null;
+            mtbDataPedido.Text = null;
+            mtbDataEntrega.Text = null;
+            lvwTipoDoce.Text = null;
+            txtValor.Text = null;
+            txtDescricao.Text = null;
+            cbxTipoDoce = null;
+            cbxFormaPagamento.Text = null;
         }
-
-        private void excluir_produto()
+        private void excluir_pedido()
         {
             try
             {
@@ -226,7 +240,7 @@ namespace Daycake
 
                     cmd.Connection = Conexao;
                     cmd.CommandText = "DELETE FROM contato WHERE id=@id";
-                    cmd.Parameters.AddWithValue("@id", id_produto_selecionado);
+                    cmd.Parameters.AddWithValue("@id", id_pedido_selecionado);
 
                     cmd.ExecuteNonQuery();
 
@@ -238,7 +252,7 @@ namespace Daycake
                             );
 
 
-                    carregar_produtos();
+                    carregar_pedido();
 
 
                     zerar_Forms();
