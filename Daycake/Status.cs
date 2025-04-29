@@ -10,18 +10,15 @@ using System.Windows.Forms;
 
 namespace Daycake
 {
-    public partial class CadastroCliente: Form
+    public partial class Status : Form
     {
-        public CadastroCliente()
+        public Status()
         {
             InitializeComponent();
         }
 
-    
-        private void btnVoltar_Click(object sender, EventArgs e)
+        private void dateTimePicker3_ValueChanged(object sender, EventArgs e)
         {
-            Form Menu = new Menu();
-            this.Close();
 
         }
     }

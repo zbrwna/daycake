@@ -10,17 +10,16 @@ using System.Windows.Forms;
 
 namespace Daycake
 {
-    public partial class AdicionarProduto: Form
+    public partial class Recebimento : Form
     {
-        public AdicionarProduto()
+        public Recebimento()
         {
             InitializeComponent();
         }
 
-        private void btnVoltar_Click(object sender, EventArgs e)
+        private void btnBuscarPedidos_Click(object sender, EventArgs e)
         {
-            Form Menu = new Menu();
-            this.Close();
+
         }
     }
 }

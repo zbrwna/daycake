@@ -12,7 +12,7 @@ using MySql.Data.MySqlClient;
 
 namespace Daycake
 {
-    public partial class FormMenu: Form
+    public partial class FormMenu : Form
     {
         public FormMenu()
         {
@@ -26,7 +26,7 @@ namespace Daycake
 
         private void mnsCadastro_Click(object sender, EventArgs e)
         {
-            FormCadastroCliente form = new FormCadastroCliente();
+            CadastroConsultaClientes form = new CadastroConsultaClientes();
             form.ShowDialog();
         }
 
@@ -36,34 +36,50 @@ namespace Daycake
             form.ShowDialog();
         }
 
-        private void mnsAdicionarProduto_Click(object sender, EventArgs e)
-        {
-            FormProduto form = new FormProduto();
-            form.ShowDialog();
-        }
 
         private void mnsClientes_Click(object sender, EventArgs e)
         {
-            FormListaClientes form = new FormListaClientes();
-            form.ShowDialog();
-        }
-
-        private void mnsConsultarPedidos_Click(object sender, EventArgs e)
-        {
-            FormListaPedidos form = new FormListaPedidos();
+            CadastroConsultaClientes form = new CadastroConsultaClientes();
             form.ShowDialog();
         }
 
         private void mnsListaProdutos_Click(object sender, EventArgs e)
         {
-            FormListaProdutos form = new FormListaProdutos();
+            Produtos form = new Produtos();
             form.ShowDialog();
         }
 
         private void mnsRecebimentos_Click(object sender, EventArgs e)
         {
-            Recebimentos form = new Recebimentos();
+            Recebimento form = new Recebimento();
             form.ShowDialog();
         }
+
+        private void mnsAdicionarProduto_Click(object sender, EventArgs e)
+        {
+            Produtos form = new Produtos();
+            form.ShowDialog();
+        }
+
+        private void mnsRecebimentos_Click_1(object sender, EventArgs e)
+        {
+            Recebimento form = new Recebimento();
+            form.ShowDialog();
+        }
+
+        private void statusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Status form = new Status();
+            form.ShowDialog();
+        }
+
+        private void FormMenu_Load(object sender, EventArgs e)
+        {
+            // Define o tamanho do formulário para a área útil da tela (sem a barra de tarefas)
+            this.Bounds = Screen.PrimaryScreen.WorkingArea;
+        }
+    
+
     }
 }
+
