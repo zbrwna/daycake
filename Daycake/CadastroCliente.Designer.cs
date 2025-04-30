@@ -51,7 +51,7 @@
             this.lblBairro = new System.Windows.Forms.Label();
             this.txtBairro = new System.Windows.Forms.TextBox();
             this.lblTelefone = new System.Windows.Forms.Label();
-            this.mtxTelefone = new System.Windows.Forms.MaskedTextBox();
+            this.mtbTelefone = new System.Windows.Forms.MaskedTextBox();
             this.tblPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.mtbDataCadastro = new System.Windows.Forms.MaskedTextBox();
             this.lblDataCadastro = new System.Windows.Forms.Label();
@@ -161,7 +161,7 @@
             this.tblPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.07692F));
             this.tblPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.021978F));
             this.tblPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.9011F));
-            this.tblPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tblPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tblPanel4.Controls.Add(this.txtNumero, 3, 1);
             this.tblPanel4.Controls.Add(this.lblEndereco, 1, 0);
             this.tblPanel4.Controls.Add(this.txtEndereco, 1, 1);
@@ -179,11 +179,11 @@
             // txtNumero
             // 
             this.txtNumero.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.txtNumero.Location = new System.Drawing.Point(411, 18);
+            this.txtNumero.Location = new System.Drawing.Point(407, 18);
             this.txtNumero.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtNumero.Multiline = true;
             this.txtNumero.Name = "txtNumero";
-            this.txtNumero.Size = new System.Drawing.Size(344, 25);
+            this.txtNumero.Size = new System.Drawing.Size(340, 25);
             this.txtNumero.TabIndex = 39;
             // 
             // lblEndereco
@@ -204,14 +204,14 @@
             this.txtEndereco.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtEndereco.Multiline = true;
             this.txtEndereco.Name = "txtEndereco";
-            this.txtEndereco.Size = new System.Drawing.Size(338, 25);
+            this.txtEndereco.Size = new System.Drawing.Size(334, 25);
             this.txtEndereco.TabIndex = 37;
             // 
             // lblNumero
             // 
             this.lblNumero.AutoSize = true;
             this.lblNumero.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.lblNumero.Location = new System.Drawing.Point(411, 0);
+            this.lblNumero.Location = new System.Drawing.Point(407, 0);
             this.lblNumero.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblNumero.Name = "lblNumero";
             this.lblNumero.Size = new System.Drawing.Size(54, 15);
@@ -360,7 +360,7 @@
             this.tblPanel5.Controls.Add(this.lblBairro, 1, 0);
             this.tblPanel5.Controls.Add(this.txtBairro, 1, 1);
             this.tblPanel5.Controls.Add(this.lblTelefone, 3, 0);
-            this.tblPanel5.Controls.Add(this.mtxTelefone, 3, 1);
+            this.tblPanel5.Controls.Add(this.mtbTelefone, 3, 1);
             this.tblPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblPanel5.Location = new System.Drawing.Point(4, 250);
             this.tblPanel5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -399,17 +399,17 @@
             this.lblTelefone.Location = new System.Drawing.Point(416, 0);
             this.lblTelefone.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTelefone.Name = "lblTelefone";
-            this.lblTelefone.Size = new System.Drawing.Size(55, 15);
+            this.lblTelefone.Size = new System.Drawing.Size(54, 15);
             this.lblTelefone.TabIndex = 35;
             this.lblTelefone.Text = "Telefone:";
             // 
-            // mtxTelefone
+            // mtbTelefone
             // 
-            this.mtxTelefone.Location = new System.Drawing.Point(415, 20);
-            this.mtxTelefone.Mask = "00000-9999";
-            this.mtxTelefone.Name = "mtxTelefone";
-            this.mtxTelefone.Size = new System.Drawing.Size(350, 23);
-            this.mtxTelefone.TabIndex = 39;
+            this.mtbTelefone.Location = new System.Drawing.Point(415, 20);
+            this.mtbTelefone.Mask = "00000-9999";
+            this.mtbTelefone.Name = "mtbTelefone";
+            this.mtbTelefone.Size = new System.Drawing.Size(350, 23);
+            this.mtbTelefone.TabIndex = 39;
             // 
             // tblPanel1
             // 
@@ -525,19 +525,23 @@
             // 
             this.lstListaClientes.BackColor = System.Drawing.Color.White;
             this.lstListaClientes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.lstListaClientes.FullRowSelect = true;
             this.lstListaClientes.HideSelection = false;
             this.lstListaClientes.Location = new System.Drawing.Point(43, 83);
+            this.lstListaClientes.MultiSelect = false;
             this.lstListaClientes.Name = "lstListaClientes";
             this.lstListaClientes.Size = new System.Drawing.Size(753, 287);
             this.lstListaClientes.TabIndex = 1;
             this.lstListaClientes.UseCompatibleStateImageBehavior = false;
+            this.lstListaClientes.View = System.Windows.Forms.View.Details;
+            this.lstListaClientes.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstListaClientes_ItemSelectionChanged);
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 95.51402F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.485981F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124F));
             this.tableLayoutPanel2.Controls.Add(this.btnBuscar, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.txtBuscar, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.lblBuscar, 0, 0);
@@ -559,6 +563,7 @@
             this.btnBuscar.TabIndex = 6;
             this.btnBuscar.Text = "Buscar";
             this.btnBuscar.UseVisualStyleBackColor = true;
+            this.btnBuscar.Click += new System.EventHandler(this.btnBuscar_Click);
             // 
             // txtBuscar
             // 
@@ -566,7 +571,7 @@
             this.txtBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.txtBuscar.Location = new System.Drawing.Point(3, 22);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(598, 21);
+            this.txtBuscar.Size = new System.Drawing.Size(594, 21);
             this.txtBuscar.TabIndex = 5;
             // 
             // lblBuscar
@@ -643,7 +648,7 @@
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label lblNomeCompleto;
         private System.Windows.Forms.TextBox txtNomeCompleto;
-        private System.Windows.Forms.MaskedTextBox mtxTelefone;
+        private System.Windows.Forms.MaskedTextBox mtbTelefone;
         private System.Windows.Forms.TabPage tabConsultaCliente;
         private System.Windows.Forms.TextBox txtEndereco;
         private System.Windows.Forms.Label lblNumero;

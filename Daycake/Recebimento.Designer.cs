@@ -31,19 +31,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Recebimento));
             this.tblPanelBase = new System.Windows.Forms.TableLayoutPanel();
             this.btnExcluirPedidos = new System.Windows.Forms.Button();
-            this.lstListaPedidos = new System.Windows.Forms.ListView();
+            this.lstRecebimentos = new System.Windows.Forms.ListView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnFiltrar = new System.Windows.Forms.Button();
             this.lblFiltro = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.cbxStatus = new System.Windows.Forms.ComboBox();
-            this.dtpDatapedido = new System.Windows.Forms.DateTimePicker();
             this.mtbIdcliente = new System.Windows.Forms.MaskedTextBox();
             this.mtbIdpedido = new System.Windows.Forms.MaskedTextBox();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblDataPedido = new System.Windows.Forms.Label();
             this.lblIdCliente = new System.Windows.Forms.Label();
             this.lblIdPedido = new System.Windows.Forms.Label();
+            this.mtbDataPedido = new System.Windows.Forms.MaskedTextBox();
             this.tblPanelBase.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -58,7 +58,7 @@
             this.tblPanelBase.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblPanelBase.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tblPanelBase.Controls.Add(this.btnExcluirPedidos, 1, 3);
-            this.tblPanelBase.Controls.Add(this.lstListaPedidos, 1, 2);
+            this.tblPanelBase.Controls.Add(this.lstRecebimentos, 1, 2);
             this.tblPanelBase.Controls.Add(this.tableLayoutPanel1, 1, 1);
             this.tblPanelBase.Location = new System.Drawing.Point(-1, -2);
             this.tblPanelBase.Name = "tblPanelBase";
@@ -82,16 +82,16 @@
             this.btnExcluirPedidos.Text = "Excluir";
             this.btnExcluirPedidos.UseVisualStyleBackColor = true;
             // 
-            // lstListaPedidos
+            // lstRecebimentos
             // 
-            this.lstListaPedidos.BackColor = System.Drawing.Color.White;
-            this.lstListaPedidos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.lstListaPedidos.HideSelection = false;
-            this.lstListaPedidos.Location = new System.Drawing.Point(43, 116);
-            this.lstListaPedidos.Name = "lstListaPedidos";
-            this.lstListaPedidos.Size = new System.Drawing.Size(717, 296);
-            this.lstListaPedidos.TabIndex = 1;
-            this.lstListaPedidos.UseCompatibleStateImageBehavior = false;
+            this.lstRecebimentos.BackColor = System.Drawing.Color.White;
+            this.lstRecebimentos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.lstRecebimentos.HideSelection = false;
+            this.lstRecebimentos.Location = new System.Drawing.Point(43, 116);
+            this.lstRecebimentos.Name = "lstRecebimentos";
+            this.lstRecebimentos.Size = new System.Drawing.Size(717, 296);
+            this.lstRecebimentos.TabIndex = 1;
+            this.lstRecebimentos.UseCompatibleStateImageBehavior = false;
             // 
             // tableLayoutPanel1
             // 
@@ -122,6 +122,7 @@
             this.btnFiltrar.TabIndex = 36;
             this.btnFiltrar.Text = "Filtrar";
             this.btnFiltrar.UseVisualStyleBackColor = true;
+            this.btnFiltrar.Click += new System.EventHandler(this.btnFiltrar_Click);
             // 
             // lblFiltro
             // 
@@ -142,13 +143,13 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 186F));
             this.tableLayoutPanel2.Controls.Add(this.cbxStatus, 3, 1);
-            this.tableLayoutPanel2.Controls.Add(this.dtpDatapedido, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.mtbIdcliente, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.mtbIdpedido, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.lblStatus, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.lblDataPedido, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.lblIdCliente, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.lblIdPedido, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.mtbDataPedido, 2, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 19);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
@@ -160,17 +161,16 @@
             // cbxStatus
             // 
             this.cbxStatus.FormattingEnabled = true;
+            this.cbxStatus.Items.AddRange(new object[] {
+            "Entregue",
+            "Em andamento",
+            "Cancelado",
+            "Finalizado",
+            "Atrasado"});
             this.cbxStatus.Location = new System.Drawing.Point(528, 23);
             this.cbxStatus.Name = "cbxStatus";
             this.cbxStatus.Size = new System.Drawing.Size(180, 21);
             this.cbxStatus.TabIndex = 14;
-            // 
-            // dtpDatapedido
-            // 
-            this.dtpDatapedido.Location = new System.Drawing.Point(353, 23);
-            this.dtpDatapedido.Name = "dtpDatapedido";
-            this.dtpDatapedido.Size = new System.Drawing.Size(156, 20);
-            this.dtpDatapedido.TabIndex = 13;
             // 
             // mtbIdcliente
             // 
@@ -226,6 +226,15 @@
             this.lblIdPedido.TabIndex = 4;
             this.lblIdPedido.Text = "ID Pedido:";
             // 
+            // mtbDataPedido
+            // 
+            this.mtbDataPedido.Location = new System.Drawing.Point(353, 23);
+            this.mtbDataPedido.Mask = "00/00/0000";
+            this.mtbDataPedido.Name = "mtbDataPedido";
+            this.mtbDataPedido.Size = new System.Drawing.Size(169, 20);
+            this.mtbDataPedido.TabIndex = 15;
+            this.mtbDataPedido.ValidatingType = typeof(System.DateTime);
+            // 
             // Recebimento
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -251,7 +260,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tblPanelBase;
         private System.Windows.Forms.Button btnExcluirPedidos;
-        private System.Windows.Forms.ListView lstListaPedidos;
+        private System.Windows.Forms.ListView lstRecebimentos;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label lblFiltro;
@@ -261,8 +270,8 @@
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.MaskedTextBox mtbIdpedido;
         private System.Windows.Forms.MaskedTextBox mtbIdcliente;
-        private System.Windows.Forms.DateTimePicker dtpDatapedido;
         private System.Windows.Forms.ComboBox cbxStatus;
         private System.Windows.Forms.Button btnFiltrar;
+        private System.Windows.Forms.MaskedTextBox mtbDataPedido;
     }
 }

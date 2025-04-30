@@ -15,7 +15,7 @@ namespace Daycake
     public partial class CadastroConsultaClientes : Form
     {
         MySqlConnection Conexao;
-        private string data_source = "datasource=localhost;username=root;password=1007;database=daycake";
+        private string data_source = "datasource=localhost;username=root;password=;database=daycake";
         public int? id_cliente_selecionado = null;
 
         public CadastroConsultaClientes()
@@ -27,72 +27,101 @@ namespace Daycake
             lstListaClientes.Items.Clear();
 
             lstListaClientes.Columns.Add("ID", 50);
-            lstListaClientes.Columns.Add("Nome", 50);
+            lstListaClientes.Columns.Add("Nome", 200);
             lstListaClientes.Columns.Add("Telefone", 100);
-            lstListaClientes.Columns.Add("Email", 100);
+            lstListaClientes.Columns.Add("Email", 200);
             lstListaClientes.Columns.Add("Endereço", 100);
-            lstListaClientes.Columns.Add("Bairro", 30);
             lstListaClientes.Columns.Add("Número", 80);
-            lstListaClientes.Columns.Add("Data Cadastro", 50);
+            lstListaClientes.Columns.Add("Bairro", 80);
+            lstListaClientes.Columns.Add("Data Cadastro", 150);
+
+            carregar_clientes();
 
         }
-
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            Conexao = new MySqlConnection(data_source);
             try
             {
+                string termoBusca = "%" + txtBuscar.Text + "%";
+
+                Conexao = new MySqlConnection(data_source);
+
+                string sql = @"SELECT idCliente, nome, telefone, email, endereco, bairro, numero, data_cadastro 
+                FROM Cliente 
+                WHERE nome LIKE @termo 
+                OR email LIKE @termo 
+                OR telefone LIKE @termo";
+
                 Conexao.Open();
 
-                string sql = "SELECT * FROM Cliente";
-
                 MySqlCommand cmd = new MySqlCommand(sql, Conexao);
+                cmd.Parameters.AddWithValue("@termo", termoBusca);
+
                 MySqlDataReader reader = cmd.ExecuteReader();
+
+                lstListaClientes.Items.Clear();
 
                 while (reader.Read())
                 {
-                    string[] row =
-                    {
-                        reader.GetInt32(0).ToString(), //id
-                        reader.GetString(1), // data de cadastro
-                        reader.GetString(2), // nome
-                        reader.GetString(3), // email
-                        reader.GetString(4), // endereço
-                        reader.GetString(5), // numero
-                        reader.GetString(6), // bairro
-                        reader.GetString(7), // telefone
-                       };
-                    var linha_list_view = new ListViewItem(row);
-                    lstListaClientes.Items.Add(linha_list_view);
-                }
+                    string[] row = new string[8];
 
+                    row[0] = reader.GetInt32(0).ToString();       // idCliente
+                    row[1] = reader.GetString(1);                // nome
+                    row[2] = reader.GetString(2);                // telefone
+                    row[3] = reader.GetString(3);                // email
+                    row[4] = reader.GetString(4);                // endereco
+                    row[5] = reader.GetString(5);                // bairro
+                    row[6] = reader.GetString(6);                   // número
+                    row[7] = reader.GetString(7);               // data_cadastro
+
+                    lstListaClientes.Items.Add(new ListViewItem(row));
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Erro na busca: " + ex.Message, "Erro",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                Conexao.Close();
+                if (Conexao?.State == ConnectionState.Open)
+                    Conexao.Close();
             }
         }
 
+        private void lstListaClientes_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            ListView.SelectedListViewItemCollection itens_selecionados = lstListaClientes.SelectedItems;
+
+
+            foreach (ListViewItem item in itens_selecionados)
+            {
+                id_cliente_selecionado = Convert.ToInt32(item.SubItems[0].Text);
+                txtNomeCompleto.Text = item.SubItems[1].Text;
+                txtNumero.Text = item.SubItems[2].Text;
+                txtEmail.Text = item.SubItems[3].Text;
+                txtEndereco.Text = item.SubItems[4].Text;
+                mtbTelefone.Text = item.SubItems[5].Text;
+                txtBairro.Text = item.SubItems[6].Text;
+                mtbDataCadastro.Text = item.SubItems[7].Text;
+
+            }
+
+            btnExcluir.Visible = true;
+        }
         private void btnCadastrarCliente_Click(object sender, EventArgs e)
         {
             try
             {
-                // Criar a conexão com o MySQL
                 Conexao = new MySqlConnection(data_source);
                 Conexao.Open();
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = Conexao;
 
-                // Habilitando o Update para o meu botão salvar
 
                 if (id_cliente_selecionado == null)
                 {
-                    // insert
-                    cmd.Parameters.Clear(); // limpa os parâmetros antigos
+                    cmd.Parameters.Clear();
                     cmd.CommandText =
                         "INSERT INTO cliente " +
                         "(nome, telefone, email, endereco, bairro, numero, data_cadastro) " +
@@ -100,7 +129,7 @@ namespace Daycake
                         "(@nome, @telefone, @email, @endereco, @bairro, @numero, @data_cadastro)";
 
                     cmd.Parameters.AddWithValue("@nome", txtNomeCompleto.Text);
-                    cmd.Parameters.AddWithValue("@telefone", mtxTelefone.Text);
+                    cmd.Parameters.AddWithValue("@telefone", mtbTelefone.Text);
                     cmd.Parameters.AddWithValue("@email", txtEmail.Text);
                     cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
                     cmd.Parameters.AddWithValue("@bairro", txtBairro.Text);
@@ -114,15 +143,14 @@ namespace Daycake
                 }
                 else
                 {
-                    // update
-                    cmd.Parameters.Clear(); // limpa os parâmetros antigos
+                    cmd.Parameters.Clear();
                     cmd.CommandText =
                         "UPDATE cliente " +
                         "SET nome = @nome, telefone = @telefone, email = @email, endereco = @endereco, bairro = @bairro, numero = @numero, data_cadastro = @data_cadastro " +
                         "WHERE idCliente = @idCliente";
 
                     cmd.Parameters.AddWithValue("@nome", txtNomeCompleto.Text);
-                    cmd.Parameters.AddWithValue("@telefone", mtxTelefone.Text);
+                    cmd.Parameters.AddWithValue("@telefone", mtbTelefone.Text);
                     cmd.Parameters.AddWithValue("@email", txtEmail.Text);
                     cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
                     cmd.Parameters.AddWithValue("@bairro", txtBairro.Text);
@@ -165,7 +193,7 @@ namespace Daycake
             txtNumero.Text = String.Empty;
             txtEmail.Text = String.Empty;
             txtEndereco.Text = String.Empty;
-            mtxTelefone = null;
+            mtbTelefone = null;
             txtBairro.Text = String.Empty;
             mtbDataCadastro = null;
         }
@@ -176,7 +204,7 @@ namespace Daycake
             {
                 Conexao = new MySqlConnection(data_source);
 
-                string sql = "SELECT * FROM contato ORDER BY id ASC";
+                string sql = "SELECT * FROM cliente ORDER BY idCliente ASC";
 
                 Conexao.Open();
 
@@ -221,8 +249,8 @@ namespace Daycake
             try
             {
 
-                DialogResult conf = MessageBox.Show("Deseja Excluir o Registro com ?",
-                                                    "Certeza ?",
+                DialogResult conf = MessageBox.Show("Deseja Excluir o Registro?",
+                                                    "Certeza?",
                                                        MessageBoxButtons.YesNo,
                                                        MessageBoxIcon.Warning);
 
@@ -236,21 +264,20 @@ namespace Daycake
                     cmd.Connection = Conexao;
 
                     cmd.Connection = Conexao;
-                    cmd.CommandText = "DELETE FROM contato WHERE id=@id";
+                    cmd.CommandText = "DELETE FROM cliente WHERE id= @id";
                     cmd.Parameters.AddWithValue("@id", id_cliente_selecionado);
 
                     cmd.ExecuteNonQuery();
 
 
                     MessageBox.Show(
-                            "Contato Excluido com Sucesso!",
+                            "Cliente Excluido com Sucesso!",
                             "Sucesso", MessageBoxButtons.OK,
                             MessageBoxIcon.Information
                             );
 
 
                     carregar_clientes();
-
 
                     zerar_forms();
                 }
@@ -272,5 +299,6 @@ namespace Daycake
                 Conexao.Close();
             }
         }
+
     }
 }

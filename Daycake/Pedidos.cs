@@ -15,7 +15,7 @@ namespace Daycake
     public partial class FormPedido : Form
     {
         MySqlConnection Conexao;
-        private string data_source = "datasource=localhost;username=root;password=1007;database=daycake";
+        private string data_source = "datasource=localhost;username=root;password=;database=daycake";
         public int? id_pedido_selecionado = null;
 
         public FormPedido()
@@ -26,14 +26,14 @@ namespace Daycake
             lstListaPedidos.Columns.Clear();
             lstListaPedidos.Items.Clear();
 
-            lstListaPedidos.Columns.Add("ID Pedido", 50);
-            lstListaPedidos.Columns.Add("ID Cliente", 50);
+            lstListaPedidos.Columns.Add("ID Pedido", 100);
+            lstListaPedidos.Columns.Add("ID Cliente", 100);
             lstListaPedidos.Columns.Add("Data do Pedido", 100);
             lstListaPedidos.Columns.Add("Data da Entrega", 100);
-            lstListaPedidos.Columns.Add("Tipo do Produto", 100);
-            lstListaPedidos.Columns.Add("Valor", 30);
-            lstListaPedidos.Columns.Add("Observação", 80);
-            lstListaPedidos.Columns.Add("Forma de Pagamento", 50);
+            lstListaPedidos.Columns.Add("Tipo de Pedido", 100);
+            lstListaPedidos.Columns.Add("Valor", 100);
+            lstListaPedidos.Columns.Add("Descrição", 100);
+            lstListaPedidos.Columns.Add("Forma de Pagamento", 100);
         }
 
         private void tabConsultarPedidos_Click(object sender, EventArgs e)
@@ -45,30 +45,27 @@ namespace Daycake
         {
             try
             {
-                // Criar a conexão com o MySQL
                 Conexao = new MySqlConnection(data_source);
                 Conexao.Open();
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = Conexao;
 
-                // Habilitando o Update para o meu botão salvar
 
                 if (id_pedido_selecionado == null)
                 {
-                    // insert
-                    cmd.Parameters.Clear(); // limpa os parâmetros antigos
+                    cmd.Parameters.Clear();
                     cmd.CommandText =
                         "INSERT INTO pedido " +
-                        "(clienteid, data_pedido, data_entrega, tipoProduto, valor, observacao, forma_pagamento) " +
+                        "(clienteid, data_pedido, data_entrega, tipo_de_doce, valor, descricao, forma_pagamento) " +
                         "VALUES " +
-                        "(@clienteid, @data_pedido, @data_entrega, @tipoProduto, @valor, @observacao, @forma_pagamento)";
+                        "(@clienteid, @data_pedido, @data_entrega, @tipoDoce, @valor, @descricao, @forma_pagamento)";
 
                     cmd.Parameters.AddWithValue("@clienteid", mtbIdCliente.Text);
                     cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
                     cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
-                    cmd.Parameters.AddWithValue("@tipoProduto", lvwTipoDoce.Text);
+                    cmd.Parameters.AddWithValue("@tipoDoce", lvwTipoDoce.Text);
                     cmd.Parameters.AddWithValue("@valor", txtValor.Text);
-                    cmd.Parameters.AddWithValue("@observacao", txtDescricao.Text);
+                    cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
                     cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
 
                     cmd.ExecuteNonQuery();
@@ -82,7 +79,7 @@ namespace Daycake
                     cmd.Parameters.Clear(); // limpa os parâmetros antigos
                     cmd.CommandText =
                         "UPDATE pedido " +
-                        "SET clienteid = @clienteid, data_pedido = @data_pedido, data_entrega = @data_entrega, tipoPrduto = @tipoProduto, valor = @valor, observacao = @observacao, forma_pagamento = @forma_pagamento " +
+                        "SET clienteid = @clienteid, data_pedido = @data_pedido, data_entrega = @data_entrega, tipo_de_doce = @tipoDoce, valor = @valor, descricao = @descricao, forma_pagamento = @forma_pagamento " +
                         "WHERE idPedido = @idPedido";
 
                     cmd.Parameters.AddWithValue("@clienteid", mtbIdCliente.Text);
@@ -90,7 +87,7 @@ namespace Daycake
                     cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
                     cmd.Parameters.AddWithValue("@tipoProduto", lvwTipoDoce.Text);
                     cmd.Parameters.AddWithValue("@valor", txtValor.Text);
-                    cmd.Parameters.AddWithValue("@observacao", txtDescricao.Text);
+                    cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
                     cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
                     cmd.Parameters.AddWithValue("@id", id_pedido_selecionado);
 
@@ -239,7 +236,7 @@ namespace Daycake
                     cmd.Connection = Conexao;
 
                     cmd.Connection = Conexao;
-                    cmd.CommandText = "DELETE FROM contato WHERE id=@id";
+                    cmd.CommandText = "DELETE FROM pedido WHERE id=@id";
                     cmd.Parameters.AddWithValue("@id", id_pedido_selecionado);
 
                     cmd.ExecuteNonQuery();
