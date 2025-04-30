@@ -106,7 +106,7 @@ namespace Daycake
                 mtbDataCadastro.Text = item.SubItems[7].Text;
 
             }
-
+            //MessageBox.Show("Id selecionado " + id_cliente_selecionado);
             btnExcluir.Visible = true;
         }
         private void btnCadastrarCliente_Click(object sender, EventArgs e)
@@ -124,9 +124,9 @@ namespace Daycake
                     cmd.Parameters.Clear();
                     cmd.CommandText =
                         "INSERT INTO cliente " +
-                        "(nome, telefone, email, endereco, bairro, numero, data_cadastro) " +
+                        "(nome, telefone, email, endereco, numero, bairro, data_cadastro) " +
                         "VALUES " +
-                        "(@nome, @telefone, @email, @endereco, @bairro, @numero, @data_cadastro)";
+                        "(@nome, @telefone, @email, @endereco, @numero, @bairro, @data_cadastro)";
 
                     cmd.Parameters.AddWithValue("@nome", txtNomeCompleto.Text);
                     cmd.Parameters.AddWithValue("@telefone", mtbTelefone.Text);
@@ -146,15 +146,15 @@ namespace Daycake
                     cmd.Parameters.Clear();
                     cmd.CommandText =
                         "UPDATE cliente " +
-                        "SET nome = @nome, telefone = @telefone, email = @email, endereco = @endereco, bairro = @bairro, numero = @numero, data_cadastro = @data_cadastro " +
-                        "WHERE idCliente = @idCliente";
+                        "SET nome = @nome, telefone = @telefone, email = @email, endereco = @endereco, numero = @numero, bairro = @bairro, data_cadastro = @dt@data_cadastro " +
+                        "WHERE idCliente = @id";
 
                     cmd.Parameters.AddWithValue("@nome", txtNomeCompleto.Text);
                     cmd.Parameters.AddWithValue("@telefone", mtbTelefone.Text);
                     cmd.Parameters.AddWithValue("@email", txtEmail.Text);
                     cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
-                    cmd.Parameters.AddWithValue("@bairro", txtBairro.Text);
                     cmd.Parameters.AddWithValue("@numero", txtNumero.Text);
+                    cmd.Parameters.AddWithValue("@bairro", txtBairro.Text);
                     cmd.Parameters.AddWithValue("@data_cadastro", mtbDataCadastro.Text);
 
                     cmd.ExecuteNonQuery();
@@ -264,7 +264,7 @@ namespace Daycake
                     cmd.Connection = Conexao;
 
                     cmd.Connection = Conexao;
-                    cmd.CommandText = "DELETE FROM cliente WHERE id= @id";
+                    cmd.CommandText = "DELETE FROM cliente WHERE idCliente=@id";
                     cmd.Parameters.AddWithValue("@id", id_cliente_selecionado);
 
                     cmd.ExecuteNonQuery();
