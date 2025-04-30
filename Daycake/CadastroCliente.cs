@@ -65,7 +65,7 @@ namespace Daycake
                 {
                     string[] row = new string[8];
 
-                    row[0] = reader.GetInt32(0).ToString();       // idCliente
+                    row[0] = reader.GetInt32(0).ToString();      // idCliente
                     row[1] = reader.GetString(1);                // nome
                     row[2] = reader.GetString(2);                // telefone
                     row[3] = reader.GetString(3);                // email

@@ -359,7 +359,7 @@
             this.lblTempoPreparo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.lblTempoPreparo.Location = new System.Drawing.Point(3, 0);
             this.lblTempoPreparo.Name = "lblTempoPreparo";
-            this.lblTempoPreparo.Size = new System.Drawing.Size(107, 15);
+            this.lblTempoPreparo.Size = new System.Drawing.Size(106, 15);
             this.lblTempoPreparo.TabIndex = 35;
             this.lblTempoPreparo.Text = "Tempo de Preparo:";
             // 
@@ -391,6 +391,9 @@
             // cbxAtivoInativo
             // 
             this.cbxAtivoInativo.FormattingEnabled = true;
+            this.cbxAtivoInativo.Items.AddRange(new object[] {
+            "Ativo",
+            "Inativo"});
             this.cbxAtivoInativo.Location = new System.Drawing.Point(3, 24);
             this.cbxAtivoInativo.Name = "cbxAtivoInativo";
             this.cbxAtivoInativo.Size = new System.Drawing.Size(278, 23);
@@ -444,19 +447,23 @@
             // 
             this.lstListaProdutos.BackColor = System.Drawing.Color.White;
             this.lstListaProdutos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.lstListaProdutos.FullRowSelect = true;
             this.lstListaProdutos.HideSelection = false;
             this.lstListaProdutos.Location = new System.Drawing.Point(43, 83);
+            this.lstListaProdutos.MultiSelect = false;
             this.lstListaProdutos.Name = "lstListaProdutos";
             this.lstListaProdutos.Size = new System.Drawing.Size(753, 287);
             this.lstListaProdutos.TabIndex = 1;
             this.lstListaProdutos.UseCompatibleStateImageBehavior = false;
+            this.lstListaProdutos.View = System.Windows.Forms.View.Details;
+            this.lstListaProdutos.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstListaProdutos_ItemSelectionChanged);
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 95.51402F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.485981F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124F));
             this.tableLayoutPanel3.Controls.Add(this.btnBuscar, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.txtBuscar, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.lblBuscar, 0, 0);
@@ -486,7 +493,7 @@
             this.txtBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.txtBuscar.Location = new System.Drawing.Point(3, 22);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(596, 20);
+            this.txtBuscar.Size = new System.Drawing.Size(594, 20);
             this.txtBuscar.TabIndex = 5;
             // 
             // lblBuscar
