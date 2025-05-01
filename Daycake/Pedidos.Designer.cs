@@ -35,10 +35,9 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTipoDoce = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.lvwTipoDoce = new System.Windows.Forms.ListView();
+            this.lstTipoDoce = new System.Windows.Forms.ListView();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.cbxTipoDoce = new System.Windows.Forms.ComboBox();
-            this.btnAdicionar = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.mtbDataEntrega = new System.Windows.Forms.MaskedTextBox();
             this.lblDataEntrega = new System.Windows.Forms.Label();
@@ -173,7 +172,7 @@
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.lvwTipoDoce, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.lstTipoDoce, 0, 0);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(435, 20);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -182,24 +181,25 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(377, 75);
             this.tableLayoutPanel4.TabIndex = 39;
             // 
-            // lvwTipoDoce
+            // lstTipoDoce
             // 
-            this.lvwTipoDoce.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvwTipoDoce.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.lvwTipoDoce.HideSelection = false;
-            this.lvwTipoDoce.Location = new System.Drawing.Point(4, 3);
-            this.lvwTipoDoce.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.lvwTipoDoce.Name = "lvwTipoDoce";
-            this.lvwTipoDoce.Size = new System.Drawing.Size(369, 69);
-            this.lvwTipoDoce.TabIndex = 40;
-            this.lvwTipoDoce.UseCompatibleStateImageBehavior = false;
+            this.lstTipoDoce.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstTipoDoce.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
+            this.lstTipoDoce.HideSelection = false;
+            this.lstTipoDoce.Location = new System.Drawing.Point(4, 3);
+            this.lstTipoDoce.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.lstTipoDoce.Name = "lstTipoDoce";
+            this.lstTipoDoce.Size = new System.Drawing.Size(369, 69);
+            this.lstTipoDoce.TabIndex = 40;
+            this.lstTipoDoce.UseCompatibleStateImageBehavior = false;
+            this.lstTipoDoce.View = System.Windows.Forms.View.Details;
+            this.lstTipoDoce.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstTipoDoce_KeyDown);
             // 
             // tableLayoutPanel5
             // 
             this.tableLayoutPanel5.ColumnCount = 1;
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 361F));
             this.tableLayoutPanel5.Controls.Add(this.cbxTipoDoce, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.btnAdicionar, 0, 1);
             this.tableLayoutPanel5.Location = new System.Drawing.Point(44, 20);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
@@ -219,20 +219,7 @@
             this.cbxTipoDoce.Name = "cbxTipoDoce";
             this.cbxTipoDoce.Size = new System.Drawing.Size(353, 23);
             this.cbxTipoDoce.TabIndex = 39;
-            // 
-            // btnAdicionar
-            // 
-            this.btnAdicionar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAdicionar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.btnAdicionar.Location = new System.Drawing.Point(269, 40);
-            this.btnAdicionar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnAdicionar.Name = "btnAdicionar";
-            this.btnAdicionar.Size = new System.Drawing.Size(88, 27);
-            this.btnAdicionar.TabIndex = 40;
-            this.btnAdicionar.Text = "Adicionar";
-            this.btnAdicionar.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnAdicionar.UseVisualStyleBackColor = true;
-            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
+            this.cbxTipoDoce.SelectedIndexChanged += new System.EventHandler(this.cbxTipoDoce_SelectedIndexChanged);
             // 
             // tableLayoutPanel2
             // 
@@ -242,7 +229,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.67442F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.842377F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.4832F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 44F));
             this.tableLayoutPanel2.Controls.Add(this.mtbDataEntrega, 3, 1);
             this.tableLayoutPanel2.Controls.Add(this.lblDataEntrega, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.mtbDataPedido, 1, 1);
@@ -259,7 +246,7 @@
             // 
             // mtbDataEntrega
             // 
-            this.mtbDataEntrega.Location = new System.Drawing.Point(434, 17);
+            this.mtbDataEntrega.Location = new System.Drawing.Point(433, 17);
             this.mtbDataEntrega.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.mtbDataEntrega.Mask = "00/00/0000";
             this.mtbDataEntrega.Name = "mtbDataEntrega";
@@ -270,7 +257,7 @@
             // 
             this.lblDataEntrega.AutoSize = true;
             this.lblDataEntrega.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.lblDataEntrega.Location = new System.Drawing.Point(434, 0);
+            this.lblDataEntrega.Location = new System.Drawing.Point(433, 0);
             this.lblDataEntrega.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDataEntrega.Name = "lblDataEntrega";
             this.lblDataEntrega.Size = new System.Drawing.Size(93, 14);
@@ -304,7 +291,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.54522F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.971576F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.4832F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 63F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
             this.tableLayoutPanel1.Controls.Add(this.btnFazerPedido, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.btnVoltar, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -323,7 +310,7 @@
             this.btnFazerPedido.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.btnFazerPedido.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFazerPedido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(235)))), ((int)(((byte)(223)))));
-            this.btnFazerPedido.Location = new System.Drawing.Point(666, 4);
+            this.btnFazerPedido.Location = new System.Drawing.Point(665, 4);
             this.btnFazerPedido.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnFazerPedido.Name = "btnFazerPedido";
             this.btnFazerPedido.Size = new System.Drawing.Size(122, 27);
@@ -356,7 +343,7 @@
             this.tblPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.6129F));
             this.tblPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.709677F));
             this.tblPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.67742F));
-            this.tblPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            this.tblPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 63F));
             this.tblPanel3.Controls.Add(this.label1, 1, 0);
             this.tblPanel3.Controls.Add(this.txtValor, 1, 1);
             this.tblPanel3.Controls.Add(this.lblFormaPagamento, 3, 0);
@@ -389,14 +376,14 @@
             this.txtValor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtValor.Multiline = true;
             this.txtValor.Name = "txtValor";
-            this.txtValor.Size = new System.Drawing.Size(351, 32);
+            this.txtValor.Size = new System.Drawing.Size(350, 32);
             this.txtValor.TabIndex = 37;
             // 
             // lblFormaPagamento
             // 
             this.lblFormaPagamento.AutoSize = true;
             this.lblFormaPagamento.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
-            this.lblFormaPagamento.Location = new System.Drawing.Point(423, 0);
+            this.lblFormaPagamento.Location = new System.Drawing.Point(422, 0);
             this.lblFormaPagamento.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFormaPagamento.Name = "lblFormaPagamento";
             this.lblFormaPagamento.Size = new System.Drawing.Size(124, 14);
@@ -406,12 +393,7 @@
             // cbxFormaPagamento
             // 
             this.cbxFormaPagamento.FormattingEnabled = true;
-            this.cbxFormaPagamento.Items.AddRange(new object[] {
-            "PIX",
-            "Débito",
-            "Dinheiro",
-            "Cartão de crédito"});
-            this.cbxFormaPagamento.Location = new System.Drawing.Point(422, 17);
+            this.cbxFormaPagamento.Location = new System.Drawing.Point(421, 17);
             this.cbxFormaPagamento.Name = "cbxFormaPagamento";
             this.cbxFormaPagamento.Size = new System.Drawing.Size(368, 23);
             this.cbxFormaPagamento.TabIndex = 39;
@@ -441,11 +423,6 @@
             // cbxStatus
             // 
             this.cbxStatus.FormattingEnabled = true;
-            this.cbxStatus.Items.AddRange(new object[] {
-            "Em andamento",
-            "Entregue",
-            "Cancelado",
-            "Finalizado"});
             this.cbxStatus.Location = new System.Drawing.Point(388, 20);
             this.cbxStatus.Name = "cbxStatus";
             this.cbxStatus.Size = new System.Drawing.Size(357, 23);
@@ -583,7 +560,7 @@
             this.tableLayoutPanel7.ColumnCount = 3;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 95.51402F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.485981F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
             this.tableLayoutPanel7.Controls.Add(this.btnBuscarPedidos, 2, 1);
             this.tableLayoutPanel7.Controls.Add(this.txtBuscarPedidos, 0, 1);
             this.tableLayoutPanel7.Controls.Add(this.lblBuscarPedidos, 0, 0);
@@ -613,7 +590,7 @@
             this.txtBuscarPedidos.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.txtBuscarPedidos.Location = new System.Drawing.Point(3, 22);
             this.txtBuscarPedidos.Name = "txtBuscarPedidos";
-            this.txtBuscarPedidos.Size = new System.Drawing.Size(627, 23);
+            this.txtBuscarPedidos.Size = new System.Drawing.Size(626, 23);
             this.txtBuscarPedidos.TabIndex = 5;
             // 
             // lblBuscarPedidos
@@ -643,6 +620,7 @@
             this.Name = "FormPedido";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pedido";
+            this.Load += new System.EventHandler(this.FormPedido_Load);
             this.tabControlPedidos.ResumeLayout(false);
             this.tabPedidos.ResumeLayout(false);
             this.tblPanel5.ResumeLayout(false);
@@ -676,10 +654,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label lblTipoDoce;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.ListView lvwTipoDoce;
+        private System.Windows.Forms.ListView lstTipoDoce;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.ComboBox cbxTipoDoce;
-        private System.Windows.Forms.Button btnAdicionar;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.MaskedTextBox mtbDataEntrega;
         private System.Windows.Forms.Label lblDataEntrega;

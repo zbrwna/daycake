@@ -35,6 +35,12 @@ namespace Daycake
             lstListaPedidos.Columns.Add("Descrição", 100);
             lstListaPedidos.Columns.Add("Forma de Pagamento", 100);
             lstListaPedidos.Columns.Add("Status", 100);
+
+            lstTipoDoce.View = View.Details;
+            lstTipoDoce.Columns.Add("Tipo Doce", 200);
+
+            carregar_pedido();
+
         }
 
         private void tabConsultarPedidos_Click(object sender, EventArgs e)
@@ -57,7 +63,7 @@ namespace Daycake
                     cmd.Parameters.Clear();
                     cmd.CommandText =
                         "INSERT INTO pedido " +
-                        "(clienteid, data_pedido, data_entrega, , valor, tipo_de_doce, descricao, forma_pagamento,status) " +
+                        "(clienteid, data_pedido, data_entrega, valor, tipo_de_doce, descricao, forma_pagamento,status) " +
                         "VALUES " +
                         "(@clienteid, @data_pedido, @data_entrega, @valor, @tipoDoce, @descricao, @forma_pagamento, @status)";
 
@@ -65,7 +71,7 @@ namespace Daycake
                     cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
                     cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
                     cmd.Parameters.AddWithValue("@valor", txtValor.Text);
-                    cmd.Parameters.AddWithValue("@tipoDoce", lvwTipoDoce.Text);
+                    cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
                     cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
                     cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
                     cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
@@ -89,7 +95,7 @@ namespace Daycake
                     cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
                     cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
                     cmd.Parameters.AddWithValue("@valor", txtValor.Text);
-                    cmd.Parameters.AddWithValue("@tipoDoce", lvwTipoDoce.Text);
+                    cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
                     cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
                     cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
                     cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
@@ -214,7 +220,7 @@ namespace Daycake
             id_pedido_selecionado = null;
             mtbDataPedido.Text = null;
             mtbDataEntrega.Text = null;
-            lvwTipoDoce.Text = null;
+            lstTipoDoce.Text = null;
             txtValor.Text = null;
             txtDescricao.Text = null;
             cbxTipoDoce = null;
@@ -278,9 +284,68 @@ namespace Daycake
             }
         }
 
-        private void btnAdicionar_Click(object sender, EventArgs e)
+        private void FormPedido_Load(object sender, EventArgs e)
+        {
+            cbxStatus.Items.Add("Em andamento");
+            cbxStatus.Items.Add("Finalizado");
+            cbxStatus.Items.Add("Cancelado");
+            cbxStatus.Items.Add("Entregue");
+
+            cbxStatus.SelectedIndex = 0;
+
+            cbxFormaPagamento.Items.Add("PIX");
+            cbxFormaPagamento.Items.Add("Cartão de crédito");
+            cbxFormaPagamento.Items.Add("Dinheiro");
+            cbxFormaPagamento.Items.Add("Débito");
+
+            cbxFormaPagamento.SelectedIndex = 0;
+
+            string connectionString = "datasource=localhost;username=root;password=;database=daycake";
+            string query = "SELECT nome FROM Produto";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        // Adiciona o nome do produto no ComboBox
+                        string nome = reader.GetString("nome");
+                        cbxTipoDoce.Items.Add(nome);
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao carregar produtos: " + ex.Message);
+
+
+                }
+            }
+        }
+
+        private void cbxTipoDoce_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string doceSelecionado = cbxTipoDoce.SelectedItem.ToString();
+            lstTipoDoce.Items.Add(new ListViewItem(doceSelecionado));
+        }
+
+        private void btnExcluir_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void lstTipoDoce_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete && lstTipoDoce.SelectedItems.Count > 0)
+
+            {
+                lstTipoDoce.Items.Remove(lstTipoDoce.SelectedItems[0]);
+            }
+        }
     }
 }
+
