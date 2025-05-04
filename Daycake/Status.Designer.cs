@@ -276,6 +276,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(802, 425);
             this.tableLayoutPanel3.TabIndex = 5;
+            this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
             // 
             // button1
             // 
@@ -360,6 +361,7 @@
             this.Name = "Status";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Status";
+            this.Load += new System.EventHandler(this.Status_Load);
             this.tabControlStatus.ResumeLayout(false);
             this.tabStatusPedido.ResumeLayout(false);
             this.tblPanelBase.ResumeLayout(false);

@@ -78,8 +78,11 @@ namespace Daycake
             // Define o tamanho do formulário para a área útil da tela (sem a barra de tarefas)
             this.Bounds = Screen.PrimaryScreen.WorkingArea;
         }
-    
 
+        private void picMenu_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

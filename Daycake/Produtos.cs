@@ -15,7 +15,7 @@ namespace Daycake
     public partial class Produtos : Form
     {
         MySqlConnection Conexao;
-        private string data_source = "datasource=localhost;username=root;password=;database=daycake";
+        private string data_source = "datasource=localhost;username=root;password=1234;database=daycake";
         public int? id_produto_selecionado = null;
 
         public Produtos()
@@ -286,6 +286,16 @@ namespace Daycake
             }
 
             btnExcluir.Visible = true;
+        }
+
+        private void tblPanelBaseProduto_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void Produtos_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

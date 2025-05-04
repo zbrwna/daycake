@@ -21,5 +21,15 @@ namespace Daycake
         {
 
         }
+
+        private void Status_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

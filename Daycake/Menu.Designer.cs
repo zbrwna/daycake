@@ -155,6 +155,7 @@
             this.picMenu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picMenu.TabIndex = 1;
             this.picMenu.TabStop = false;
+            this.picMenu.Click += new System.EventHandler(this.picMenu_Click);
             // 
             // FormMenu
             // 

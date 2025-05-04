@@ -17,7 +17,7 @@ namespace Daycake
     public partial class Recebimento : Form
     {
         MySqlConnection Conexao;
-        private string data_source = "datasource=localhost;username=root;password=;database=daycake";
+        private string data_source = "server=localhost;username=root;password=1234;database=daycake";
         //public int? id_filtro_selecionado = null;
 
         public Recebimento()
@@ -37,6 +37,11 @@ namespace Daycake
         private void btnFiltrar_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void tblPanelBase_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }   
 }

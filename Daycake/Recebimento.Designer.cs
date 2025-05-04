@@ -69,6 +69,7 @@
             this.tblPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tblPanelBase.Size = new System.Drawing.Size(803, 453);
             this.tblPanelBase.TabIndex = 3;
+            this.tblPanelBase.Paint += new System.Windows.Forms.PaintEventHandler(this.tblPanelBase_Paint);
             // 
             // btnExcluirPedidos
             // 
