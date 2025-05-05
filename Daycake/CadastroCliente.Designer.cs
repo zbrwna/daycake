@@ -161,7 +161,7 @@
             this.tblPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.07692F));
             this.tblPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.021978F));
             this.tblPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.9011F));
-            this.tblPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
+            this.tblPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tblPanel4.Controls.Add(this.txtNumero, 3, 1);
             this.tblPanel4.Controls.Add(this.lblEndereco, 1, 0);
             this.tblPanel4.Controls.Add(this.txtEndereco, 1, 1);
@@ -183,7 +183,7 @@
             this.txtNumero.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txtNumero.Multiline = true;
             this.txtNumero.Name = "txtNumero";
-            this.txtNumero.Size = new System.Drawing.Size(334, 25);
+            this.txtNumero.Size = new System.Drawing.Size(333, 25);
             this.txtNumero.TabIndex = 39;
             // 
             // lblEndereco
@@ -541,7 +541,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 95.51402F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 4.485981F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132F));
             this.tableLayoutPanel2.Controls.Add(this.btnBuscar, 2, 1);
             this.tableLayoutPanel2.Controls.Add(this.txtBuscar, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.lblBuscar, 0, 0);
@@ -571,7 +571,7 @@
             this.txtBuscar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(98)))), ((int)(((byte)(98)))));
             this.txtBuscar.Location = new System.Drawing.Point(3, 22);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(588, 21);
+            this.txtBuscar.Size = new System.Drawing.Size(587, 21);
             this.txtBuscar.TabIndex = 5;
             // 
             // lblBuscar

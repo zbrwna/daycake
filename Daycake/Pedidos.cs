@@ -19,7 +19,7 @@ namespace Daycake
     public partial class FormPedido : Form
     {
         MySqlConnection Conexao;
-        string data_source = "datasource=localhost;username=root;password=1234;database=daycake";
+        string data_source = "datasource=localhost;username=root;password=;database=daycake";
         public int? id_pedido_selecionado = null;
         decimal valorTotal = 0;
         List<ClienteItem> ListaClientes = new List<ClienteItem>();
@@ -137,7 +137,7 @@ namespace Daycake
             cbxFormaPagamento.SelectedIndex = 0;
 
 
-            string connectionString = "datasource=localhost;username=root;password=1234;database=daycake";
+            string connectionString = "datasource=localhost;username=root;password=;database=daycake";
             string query = "SELECT nome FROM Produto";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
@@ -213,7 +213,7 @@ namespace Daycake
             ListaClientes.Clear();
             cbxNomeCliente.Items.Clear();
 
-            using (MySqlConnection conexao = new MySqlConnection("datasource = localhost; username = root; password = 1234; database = daycake"))
+            using (MySqlConnection conexao = new MySqlConnection("datasource = localhost; username = root; password =; database = daycake"))
             {
                 conexao.Open();
                 string sql = "SELECT idCliente, nome FROM Cliente";
@@ -223,10 +223,10 @@ namespace Daycake
                 {
                     while (reader.Read())
                     {
-                        ClienteItem cliente = new ClienteItem();
+                        ClienteItem cliente = new ClienteItem()
                         {
-                            IDCliente = Convert.ToInt32("idCliente");
-                            nomeCliente = reader.GetString("nome cliente");
+                            IDCliente = Convert.ToInt32(reader["idCliente"]),
+                            nomeCliente = reader.GetString("nome")
                         };
                         ListaClientes.Add(cliente);
                         cbxNomeCliente.Items.Add(cliente.nomeCliente);
@@ -243,39 +243,39 @@ namespace Daycake
                 return;
             }
 
-            ClienteItem clienteSelecionado = (ClienteItem)cbxNomeCliente.SelectedItem;
+            string nomeSelecionado = cbxNomeCliente.SelectedItem.ToString();
+            ClienteItem clienteSelecionado = ListaClientes.FirstOrDefault(c => c.nomeCliente == nomeSelecionado);
+
+            if (clienteSelecionado == null)
+            {
+                MessageBox.Show("Cliente não encontrado.");
+                return;
+            }
+
             int clienteId = clienteSelecionado.IDCliente;
 
-            try
+            using (MySqlConnection conexao = new MySqlConnection("datasource=localhost;username=root;password=;database=daycake"))
             {
-                using (MySqlConnection conexao = new MySqlConnection("datasource=localhost;username=root;password=1234;database=daycake"))
-                {
-                    conexao.Open();
-                    string sql = "INSERT INTO pedido (clienteid = @clienteid, data_pedido, data_entrega, valor, tipo_de_doce, descricao, forma_pagamento,status)" +
-                        " VALUES (@data_pedido, @data_entrega, @valortotal, @tipoDoce, @descricao, @forma_pagamento, @status)";
+                conexao.Open();
+                string sql = "INSERT INTO pedido (clienteid, data_pedido, data_entrega, valor, tipo_de_doce, descricao, forma_pagamento,status)" +
+                        " VALUES (@clienteid, @data_pedido, @data_entrega, @valor, @tipoDoce, @descricao, @forma_pagamento, @status)";
+                using (MySqlCommand cmd = new MySqlCommand(sql, conexao))
+                {                
+                    cmd.Parameters.AddWithValue("@clienteid", clienteId);
+                    cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
+                    cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
+                    cmd.Parameters.AddWithValue("@valor", decimal.Parse(txtValor.Text,
+                        NumberStyles.Currency, CultureInfo.CurrentCulture));
+                    cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
+                    cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
+                    cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
+                    cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
 
-
-                    using (MySqlCommand cmd = new MySqlCommand(sql, conexao))
-                    {
-                        cmd.Parameters.AddWithValue("@clienteid", clienteId);
-                        cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
-                        cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
-                        cmd.Parameters.AddWithValue("@valortotal", decimal.Parse(txtValor.Text,
-                            NumberStyles.Currency, CultureInfo.CurrentCulture));
-                        cmd.Parameters.AddWithValue("@tipoDoce", cbxTipoDoce.Text);
-                        cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
-                        cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
-                        cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.ExecuteNonQuery();
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao cadastrar pedido: " + ex.Message);
 
-            }
-
+            MessageBox.Show("Pedido cadastrado com sucesso!");
         }
         //    try
         //    {
