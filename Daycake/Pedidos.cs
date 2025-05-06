@@ -280,115 +280,75 @@ namespace Daycake
             }
 
             int clienteId = clienteSelecionado.IDCliente;
-           
-                try
-                {
 
-                    using (MySqlConnection conexao = new MySqlConnection("datasource=localhost;username=root;password=;database=daycake"))
+            try
+            {
+
+                using (MySqlConnection conexao = new MySqlConnection("datasource=localhost;username=root;password=;database=daycake"))
+                {
+                    conexao.Open();
+                    MySqlCommand cmd = new MySqlCommand();
+                    cmd.Connection = conexao;
+
+                    if (id_pedido_selecionado == null)
                     {
-                        conexao.Open();
-                         string sql = "INSERT INTO pedido (clienteid, data_pedido, data_entrega, valor, tipo_de_doce, descricao, forma_pagamento,status)" +
+                        cmd.CommandText =
+                             "INSERT INTO pedido (clienteid, data_pedido, data_entrega, valor, tipo_de_doce, descricao, forma_pagamento,status)" +
                              " VALUES (@clienteid, @data_pedido, @data_entrega, @valor, @tipoDoce, @descricao, @forma_pagamento, @status)";
 
-                        using (MySqlCommand cmd = new MySqlCommand(sql, conexao))
-                        {
-                            cmd.Parameters.AddWithValue("@clienteid", clienteId);
-                            cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
-                            cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
-                            cmd.Parameters.AddWithValue("@valor", decimal.Parse(txtValor.Text,
-                            NumberStyles.Currency, CultureInfo.CurrentCulture));
-                            cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
-                            cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
-                            cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
-                            cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
+                        cmd.Parameters.AddWithValue("@clienteid", clienteId);
+                        cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
+                        cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
+                        cmd.Parameters.AddWithValue("@valor", decimal.Parse(txtValor.Text,
+                        NumberStyles.Currency, CultureInfo.CurrentCulture));
+                        cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
+                        cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
+                        cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
+                        cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
 
-                            cmd.ExecuteNonQuery();
-                        }
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Pedido Inserido com Sucesso", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    MessageBox.Show("Pedido cadastrado com sucesso!");
+                    else
+                    {
+                        cmd.CommandText =
+                        "UPDATE pedido SET clienteid = @clienteid, data_pedido = @data_pedido, data_entrega = @data_entrega, valor = *valor " +
+                        "tipo_de_doce = @tipoDoce, descricao = @descricao, forma_pagamento = @forma_pagamento, status = @status " +
+                        "WHERE idPedido = @idPedido";
+
+                        cmd.Parameters.AddWithValue("@clienteid", clienteId);
+                        cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
+                        cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
+                        cmd.Parameters.AddWithValue("@valor", decimal.Parse(txtValor.Text, NumberStyles.Currency, CultureInfo.CurrentCulture));
+                        cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
+                        cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
+                        cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
+                        cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
+                        cmd.Parameters.AddWithValue("@idPedido", id_pedido_selecionado);
+
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Pedido Atualizado com Sucesso", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
                 }
-                catch (Exception ex)
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro ao cadastrar pedido: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro inesperado: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (Conexao != null && Conexao.State == ConnectionState.Open)
                 {
-                    MessageBox.Show("Erro ao cadastrar pedido: " + ex.Message);
+                    Conexao.Close();
                 }
-
-                 try
-                 {
-                     Conexao = new MySqlConnection(data_source);
-                     Conexao.Open();
-                        MySqlCommand cmd = new MySqlCommand();
-
-                     cmd.Connection = Conexao;
-
-
-                     if (id_pedido_selecionado == null)
-                     {
-                         cmd.Parameters.Clear();
-                         cmd.CommandText =
-                        "INSERT INTO pedido " +
-                        "(nome, data_pedido, data_entrega, valor, tipo_de_doce, descricao, forma_pagamento,status) " +
-                        "VALUES " +
-                        "(nome, @data_pedido, @data_entrega, @valortotal, @tipoDoce, @descricao, @forma_pagamento, @status)";
-
-                          cmd.Parameters.AddWithValue("@nome_cliente", cbxNomeCliente.Text);
-                          cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
-                          cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
-                          cmd.Parameters.AddWithValue("@valortotal", decimal.Parse(txtValor.Text,
-                            System.Globalization.NumberStyles.Currency, System.Globalization.CultureInfo.CurrentCulture));
-                          cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
-                          cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
-                          cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
-                          cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
-
-                         cmd.ExecuteNonQuery();
-                        MessageBox.Show("Pedido Inserido com Sucesso", "Sucesso",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            // update
-                            cmd.Parameters.Clear(); // limpa os parâmetros antigos
-                            cmd.CommandText =
-                                "UPDATE pedido " +
-                                "SET clienteid = @clienteid, data_pedido = @data_pedido, data_entrega = @data_entrega, valor = @valortotal, tipo_de_doce = @tipoDoce, descricao = @descricao," +
-                                " forma_pagamento = @forma_pagamento, status = @status " +
-                                "WHERE idPedido = @idPedido";
-
-                            cmd.Parameters.AddWithValue("@nome_cliente", cbxNomeCliente.Text);
-                            cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
-                            cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
-                            cmd.Parameters.AddWithValue("@valortotal", decimal.Parse(txtValor.Text,
-                            System.Globalization.NumberStyles.Currency, System.Globalization.CultureInfo.CurrentCulture));
-                            cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
-                            cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
-                            cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
-                            cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
-                            cmd.Parameters.AddWithValue("@id", id_pedido_selecionado);
-
-                            cmd.ExecuteNonQuery();
-                            MessageBox.Show("Pedido Atualizado com Sucesso", "Sucesso",
-                                            MessageBoxButtons.OK,
-                                            MessageBoxIcon.Information);
-                        }
-                    }
-                    catch (MySqlException ex)
-
-                    {
-                        MessageBox.Show("Error " + "has occured: " + ex.Message,
-                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Has occured: " + ex.Message,
-                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    finally
-                    {
-            Conexao.Close();
+            }
         }
-                }
+
 
         private void btnBuscarPedidos_Click(object sender, EventArgs e)
         {
