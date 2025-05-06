@@ -23,8 +23,11 @@ namespace Daycake
         string data_source = "datasource=localhost;username=root;password=;database=daycake";
         public int? id_pedido_selecionado = null;
         decimal valorTotal = 0;
+
+
         List<ClienteItem> ListaClientes = new List<ClienteItem>();
         private bool estaSelecionando = false;
+        //private ComboBox cbxNomeCliente = new ComboBox();
 
         public FormPedido()
         {
@@ -148,6 +151,9 @@ namespace Daycake
 
             cbxFormaPagamento.SelectedIndex = 0;
 
+            cbxNomeCliente.DropDownStyle = ComboBoxStyle.DropDown;
+
+            CarregarCliente();
 
             string connectionString = "datasource=localhost;username=root;password=;database=daycake";
             string query = "SELECT nome FROM Produto";
@@ -225,6 +231,12 @@ namespace Daycake
             ListaClientes.Clear();
             cbxNomeCliente.Items.Clear();
 
+            cbxNomeCliente.DropDownStyle = ComboBoxStyle.DropDown;
+            cbxNomeCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cbxNomeCliente.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            AutoCompleteStringCollection nomes = new AutoCompleteStringCollection();
+
             using (MySqlConnection conexao = new MySqlConnection("datasource = localhost; username = root; password =; database = daycake"))
             {
                 try
@@ -241,13 +253,15 @@ namespace Daycake
                             ClienteItem cliente = new ClienteItem()
                             {
                                 IDCliente = Convert.ToInt32(reader["idCliente"]),
-                                nomeCliente = reader.GetString("nome")
+                                nomeCliente = reader["nome"].ToString()
                             };
 
                             ListaClientes.Add(cliente);
                             cbxNomeCliente.Items.Add(cliente);
+                            nomes.Add(cliente.nomeCliente);
                         }
                     }
+                    cbxNomeCliente.AutoCompleteCustomSource = nomes;
                 }
                 catch (Exception ex)
                 {
@@ -261,7 +275,7 @@ namespace Daycake
 
             if (clienteSelecionado == null)
             {
-                MessageBox.Show("Selecione um cliente válido.");
+                MessageBox.Show("Cliente inválido.");
                 return;
             }
 
@@ -297,84 +311,84 @@ namespace Daycake
                 {
                     MessageBox.Show("Erro ao cadastrar pedido: " + ex.Message);
                 }
-            
+
+                 try
+                 {
+                     Conexao = new MySqlConnection(data_source);
+                     Conexao.Open();
+                        MySqlCommand cmd = new MySqlCommand();
+
+                     cmd.Connection = Conexao;
+
+
+                     if (id_pedido_selecionado == null)
+                     {
+                         cmd.Parameters.Clear();
+                         cmd.CommandText =
+                        "INSERT INTO pedido " +
+                        "(nome, data_pedido, data_entrega, valor, tipo_de_doce, descricao, forma_pagamento,status) " +
+                        "VALUES " +
+                        "(nome, @data_pedido, @data_entrega, @valortotal, @tipoDoce, @descricao, @forma_pagamento, @status)";
+
+                          cmd.Parameters.AddWithValue("@nome_cliente", cbxNomeCliente.Text);
+                          cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
+                          cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
+                          cmd.Parameters.AddWithValue("@valortotal", decimal.Parse(txtValor.Text,
+                            System.Globalization.NumberStyles.Currency, System.Globalization.CultureInfo.CurrentCulture));
+                          cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
+                          cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
+                          cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
+                          cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
+
+                         cmd.ExecuteNonQuery();
+                        MessageBox.Show("Pedido Inserido com Sucesso", "Sucesso",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            // update
+                            cmd.Parameters.Clear(); // limpa os parâmetros antigos
+                            cmd.CommandText =
+                                "UPDATE pedido " +
+                                "SET clienteid = @clienteid, data_pedido = @data_pedido, data_entrega = @data_entrega, valor = @valortotal, tipo_de_doce = @tipoDoce, descricao = @descricao," +
+                                " forma_pagamento = @forma_pagamento, status = @status " +
+                                "WHERE idPedido = @idPedido";
+
+                            cmd.Parameters.AddWithValue("@nome_cliente", cbxNomeCliente.Text);
+                            cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
+                            cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
+                            cmd.Parameters.AddWithValue("@valortotal", decimal.Parse(txtValor.Text,
+                            System.Globalization.NumberStyles.Currency, System.Globalization.CultureInfo.CurrentCulture));
+                            cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
+                            cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
+                            cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
+                            cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
+                            cmd.Parameters.AddWithValue("@id", id_pedido_selecionado);
+
+                            cmd.ExecuteNonQuery();
+                            MessageBox.Show("Pedido Atualizado com Sucesso", "Sucesso",
+                                            MessageBoxButtons.OK,
+                                            MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (MySqlException ex)
+
+                    {
+                        MessageBox.Show("Error " + "has occured: " + ex.Message,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Has occured: " + ex.Message,
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+            Conexao.Close();
         }
-        //    try
-        //    {
-        //        Conexao = new MySqlConnection(data_source);
-        //        Conexao.Open();
-        //        MySqlCommand cmd = new MySqlCommand();
-        //        cmd.Connection = Conexao;
-
-
-                //        if (id_pedido_selecionado == null)
-                //        {
-                //            cmd.Parameters.Clear();
-                //            cmd.CommandText =
-                //                "INSERT INTO pedido " +
-                //                "(clienteid = @clienteid, data_pedido, data_entrega, valor, tipo_de_doce, descricao, forma_pagamento,status) " +
-                //                "VALUES " +
-                //                "(@data_pedido, @data_entrega, @valortotal, @tipoDoce, @descricao, @forma_pagamento, @status)";
-
-                //            cmd.Parameters.AddWithValue("@clienteid", mtbIdCliente.Text);
-                //            cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
-                //            cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
-                //            cmd.Parameters.AddWithValue("@valortotal", decimal.Parse(txtValor.Text,
-                //            System.Globalization.NumberStyles.Currency, System.Globalization.CultureInfo.CurrentCulture));
-                //            cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
-                //            cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
-                //            cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
-                //            cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
-
-                //            cmd.ExecuteNonQuery();
-                //            MessageBox.Show("Pedido Inserido com Sucesso", "Sucesso",
-                //                            MessageBoxButtons.OK,
-                //                            MessageBoxIcon.Information);
-                //        }
-                //        else
-                //        {
-                //            // update
-                //            cmd.Parameters.Clear(); // limpa os parâmetros antigos
-                //            cmd.CommandText =
-                //                "UPDATE pedido " +
-                //                "SET clienteid = @clienteid, data_pedido = @data_pedido, data_entrega = @data_entrega, valor = @valortotal, tipo_de_doce = @tipoDoce, descricao = @descricao," +
-                //                " forma_pagamento = @forma_pagamento, status = @status " +
-                //                "WHERE idPedido = @idPedido";
-
-                //            cmd.Parameters.AddWithValue("@clienteid", mtbIdCliente.Text);
-                //            cmd.Parameters.AddWithValue("@data_pedido", mtbDataPedido.Text);
-                //            cmd.Parameters.AddWithValue("@data_entrega", mtbDataEntrega.Text);
-                //            cmd.Parameters.AddWithValue("@valortotal", decimal.Parse(txtValor.Text,
-                //            System.Globalization.NumberStyles.Currency, System.Globalization.CultureInfo.CurrentCulture));
-                //            cmd.Parameters.AddWithValue("@tipoDoce", lstTipoDoce.Text);
-                //            cmd.Parameters.AddWithValue("@descricao", txtDescricao.Text);
-                //            cmd.Parameters.AddWithValue("@forma_pagamento", cbxFormaPagamento.Text);
-                //            cmd.Parameters.AddWithValue("@status", cbxStatus.Text);
-                //            cmd.Parameters.AddWithValue("@id", id_pedido_selecionado);
-
-                //            cmd.ExecuteNonQuery();
-                //            MessageBox.Show("Pedido Atualizado com Sucesso", "Sucesso",
-                //                            MessageBoxButtons.OK,
-                //                            MessageBoxIcon.Information);
-                //        }
-                //    }
-                //    catch (MySqlException ex)
-
-                //    {
-                //        MessageBox.Show("Error " + "has occured: " + ex.Message,
-                //            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        MessageBox.Show("Has occured: " + ex.Message,
-                //            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //    }
-                //    finally
-                //    {
-                //        Conexao.Close();
-                //    }
-                //}
+                }
 
         private void btnBuscarPedidos_Click(object sender, EventArgs e)
         {
@@ -495,8 +509,8 @@ namespace Daycake
 
         private void cbxNomeCliente_TextChanged(object sender, EventArgs e)
         {
-            if (estaSelecionando) 
-                return; 
+            if (estaSelecionando)
+                return;
 
             string textoDigitado = cbxNomeCliente.Text.ToLower();
 
@@ -516,8 +530,10 @@ namespace Daycake
             }
 
             cbxNomeCliente.EndUpdate();
-
-            cbxNomeCliente.DroppedDown = true;
+            if (cbxNomeCliente.Items.Count > 0)
+            {
+                cbxNomeCliente.DroppedDown = false;
+            }
             cbxNomeCliente.SelectionStart = textoDigitado.Length;
             cbxNomeCliente.SelectionLength = 0;
 
