@@ -304,5 +304,10 @@ namespace Daycake
         {
 
         }
+
+        private void mtbIdCliente_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+
+        }
     }
 }
